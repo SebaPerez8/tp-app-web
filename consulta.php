@@ -1,7 +1,3 @@
-<?php
-    include("conectar.php");
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +7,7 @@
     <title>Resultado consulta</title>
 </head>
 <body>
-   
+  
     
     <table style="width:100%" border = 1>
         <tr>
@@ -24,17 +20,27 @@
             <th>Importe</th>
         </tr>
         <?php
-            $barrio = $_POST['barrio'];
+            include("conectar.php");
+            $barrio= $_POST['barrio'];
             $tipo= $_POST['tipo'];
             $situacion= $_POST['situacion'];
             $sql= "";
-            $sql .= "SELECT I.domicilio, B.nombre, P.nombre, P.telefono, I.tipo, I.situacion, I.importe";
-            $sql .= "FROM inmuebles I";
-            $sql .= "INNER JOIN barrios B ON I.barrio = B.barrio ";
-            $sql .= "INNER JOIN propietarios P ON I.propietario = P.propietario ";
-            
+            $sql= "SELECT I.domicilio, B.nombre AS barrio, P.nombre AS propietario, P.telefono, I.tipo, I.situacion, I.importe FROM inmuebles I 
+                INNER JOIN barrios B ON I.barrio=B.barrio 
+                INNER JOIN propietarios P ON I.propietario=P.propietario";
+            $result = mysqli_query($conn, $sql);
 
-         
+            while($row = mysqli_fetch_assoc($result)) {
+                echo "<tr>";
+                echo "<td>" . $row['domicilio'] . "</td>";
+                echo "<td>" . $row['barrio'] . "</td>";
+                echo "<td>" . $row['propietario'] . "</td>";
+                echo "<td>" . $row['telefono'] . "</td>";
+                echo "<td>" . $row['tipo'] . "</td>";
+                echo "<td>" . $row['situacion'] . "</td>";
+                echo "<td>$ " . $row['importe'] . "</td>";
+                echo "</tr>";
+            }
 
             mysqli_close($conn);
         ?>
