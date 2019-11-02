@@ -23,17 +23,16 @@
                     }
                     mysqli_close($conn);
                 ?>
-        
-        
+
             </select> <br> <br>
         <h3>Tipo</h3> 
             <input type="radio" name="tipo" checked value="C"> Casa
-            <input type="radio" name="tipo"  value="D"> Departamento
-            <input type="radio" name="tipo" value="L"> Local
+            <input type="radio" name="tipo" value= "D"> Departamento
+            <input type="radio" name="tipo" value= "L"> Local
             <br> <br>
         <h3>Situacion</h3> 
-            <input type="checkbox" name="situacion" checked value="V"> Venta
-            <input type="checkbox" name="situacion" value="A"> Alquiler 
+            <input type="checkbox" name="situacion" checked value= "V"> Venta
+            <input type="checkbox" name="situacion" value= "A"> Alquiler 
             <br> <br>
             <input type="submit" value="CONSULTAR">
     </form>  

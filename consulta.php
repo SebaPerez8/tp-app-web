@@ -9,7 +9,18 @@
 </head>
 <body>
   
-    
+    <?php
+        include("conectar.php");
+        $sql = "SELECT nombre FROM barrios WHERE barrio= " . $_POST['barrio']."";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)) {
+           
+            echo $row['nombre'];     
+        }
+        mysqli_close($conn);
+        
+        
+    ?>
     <table>
         <tr>
             <th>Domicilio</th>
@@ -28,7 +39,12 @@
             $sql= "";
             $sql= "SELECT I.domicilio, B.nombre AS barrio, P.nombre AS propietario, P.telefono, I.tipo, I.situacion, I.importe FROM inmuebles I 
                 INNER JOIN barrios B ON I.barrio=B.barrio 
-                INNER JOIN propietarios P ON I.propietario=P.propietario";
+                INNER JOIN propietarios P ON I.propietario=P.propietario
+                WHERE I.barrio='$barrio' AND I.tipo ='$tipo' AND I.situacion='$situacion'";
+                
+                   
+                
+          
             $result = mysqli_query($conn, $sql);
 
             while($row = mysqli_fetch_assoc($result)) {
@@ -39,7 +55,7 @@
                 echo "<td>" . $row['telefono'] . "</td>";
                 echo "<td>" . $row['tipo'] . "</td>";
                 echo "<td>" . $row['situacion'] . "</td>";
-                echo "<td>$ " . $row['importe'] . "</td>";
+                echo "<td> $ " . $row['importe'] . "</td>";
                 echo "</tr>";
             }
 
