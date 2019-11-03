@@ -33,24 +33,28 @@
         </tr>
         <?php
             include("conectar.php");
+            
             $barrio= $_REQUEST['barrio'];
             $tipo= $_REQUEST['tipo'];
-            $situacion= $_REQUEST['situacion'];
+            $venta= $_REQUEST['venta'];
+            $alquiler= $_REQUEST['alquiler'];
+            
             $sql= "SELECT I.domicilio, B.nombre AS barrio, P.nombre AS propietario, P.telefono, I.tipo, I.situacion, I.importe FROM inmuebles I 
                     INNER JOIN barrios B ON I.barrio=B.barrio 
                     INNER JOIN propietarios P ON I.propietario=P.propietario";
-             
-           
-                $sql.= " WHERE I.barrio='$barrio' AND I.tipo ='$tipo' ";   
+            
+                if($venta == true && $alquiler == false){
+                    $sql.= " WHERE I.barrio='$barrio' AND I.tipo ='$tipo' AND I.situacion='$venta' ";
+                }elseif($venta == false && $alquiler == true){
+                    $sql.= " WHERE I.barrio='$barrio' AND I.tipo ='$tipo' AND I.situacion='$alquiler' ";
+                }elseif($venta == true && $alquiler == true) {
+                    $sql.= " WHERE I.barrio='$barrio' AND I.tipo ='$tipo' ";
+                }
             
             
             
-
-            
-            
-
             $result = mysqli_query($conn, $sql);
-
+            
             while($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
                     echo "<td>" . $row['domicilio'] . "</td>";
@@ -64,6 +68,7 @@
             }
 
             mysqli_close($conn);
+        
         ?>
 
        
