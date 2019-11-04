@@ -9,7 +9,18 @@
 </head>
 <body>
   
-    
+    <?php
+        include("conectar.php");
+        $sql = "SELECT nombre FROM barrios WHERE barrio= " . $_POST['barrio'] . "";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)) {
+           
+            echo "<h3>" . $row['nombre'] . "</h3>";     
+        }
+        mysqli_close($conn);
+        
+        
+    ?>
     <table>
         <tr>
             <th>Domicilio</th>
@@ -22,32 +33,47 @@
         </tr>
         <?php
             include("conectar.php");
-            $barrio= $_POST['barrio'];
-            $tipo= $_POST['tipo'];
-            $situacion= $_POST['situacion'];
-            $sql= "";
+            
+            $barrio= $_REQUEST['barrio'];
+            $tipo= $_REQUEST['tipo'];
+            $venta= $_REQUEST['venta'];
+            $alquiler= $_REQUEST['alquiler'];
+            
             $sql= "SELECT I.domicilio, B.nombre AS barrio, P.nombre AS propietario, P.telefono, I.tipo, I.situacion, I.importe FROM inmuebles I 
-                INNER JOIN barrios B ON I.barrio=B.barrio 
-                INNER JOIN propietarios P ON I.propietario=P.propietario";
+                    INNER JOIN barrios B ON I.barrio=B.barrio 
+                    INNER JOIN propietarios P ON I.propietario=P.propietario";
+            
+                if($venta == true && $alquiler == false){
+                    $sql.= " WHERE I.barrio='$barrio' AND I.tipo ='$tipo' AND I.situacion='$venta' ";
+                }elseif($venta == false && $alquiler == true){
+                    $sql.= " WHERE I.barrio='$barrio' AND I.tipo ='$tipo' AND I.situacion='$alquiler' ";
+                }elseif($venta == true && $alquiler == true) {
+                    $sql.= " WHERE I.barrio='$barrio' AND I.tipo ='$tipo' ";
+                }
+            
+            
+            
             $result = mysqli_query($conn, $sql);
-
+            
             while($row = mysqli_fetch_assoc($result)) {
-                echo "<tr>";
-                echo "<td>" . $row['domicilio'] . "</td>";
-                echo "<td>" . $row['barrio'] . "</td>";
-                echo "<td>" . $row['propietario'] . "</td>";
-                echo "<td>" . $row['telefono'] . "</td>";
-                echo "<td>" . $row['tipo'] . "</td>";
-                echo "<td>" . $row['situacion'] . "</td>";
-                echo "<td>$ " . $row['importe'] . "</td>";
-                echo "</tr>";
+                    echo "<tr>";
+                    echo "<td>" . $row['domicilio'] . "</td>";
+                    echo "<td>" . $row['barrio'] . "</td>";
+                    echo "<td>" . $row['propietario'] . "</td>";
+                    echo "<td>" . $row['telefono'] . "</td>";
+                    echo "<td>" . $row['tipo'] . "</td>";
+                    echo "<td>" . $row['situacion'] . "</td>";
+                    echo "<td> $ " . $row['importe'] . "</td>";
+                    echo "</tr>";
             }
 
             mysqli_close($conn);
+        
         ?>
 
        
     </table>
+    <br> <br>
     <a href="index.php">Regresar</a>  
 
 
