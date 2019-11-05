@@ -61,8 +61,18 @@
                     echo "<td>" . $row['barrio'] . "</td>";
                     echo "<td>" . $row['propietario'] . "</td>";
                     echo "<td>" . $row['telefono'] . "</td>";
-                    echo "<td>" . $row['tipo'] . "</td>";
-                    echo "<td>" . $row['situacion'] . "</td>";
+                    if ($row['tipo'] == "C") {
+                        echo "<td>" . $row['tipo'] = "Casa"  . "</td>";
+                    }elseif ($row['tipo'] == "D"){
+                        echo "<td>" . $row['tipo'] = "Departamento"  . "</td>";
+                    }else {
+                        echo "<td>" . $row['tipo'] = "Local"  . "</td>";
+                    }
+                    if ($row['situacion'] == "V") {
+                        echo "<td>" . $row['situacion'] = "Venta"  . "</td>";
+                    }else{
+                        echo "<td>" . $row['situacion'] = "Alquiler"  . "</td>";
+                    }
                     echo "<td> $ " . $row['importe'] . "</td>";
                     echo "</tr>";
             }
