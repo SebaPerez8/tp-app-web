@@ -15,7 +15,7 @@
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_assoc($result)) {
            
-            echo "<h3>" . $row['nombre'] . "</h3>";     
+            echo "<h2>" . $row['nombre'] . "</h2>";     
         }
         mysqli_close($conn);
         
